@@ -1,5 +1,8 @@
 META = "meta"
 REVIEW = "review"
+RAW = "data/raw"
+INTERMEDIATE = "D:/data/intermediate"
+PROCESSED = "data/processed"
 DATA_PATHS: list[str] = ["data/raw/review", "data/raw/meta", "data/intermediate", "data/processed"]
 
 ALL_CATEGORIES: list[str] = [
