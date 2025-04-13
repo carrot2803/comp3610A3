@@ -1,6 +1,6 @@
 META = "meta"
 REVIEW = "review"
-DATA_PATHS: list[str] = ["data/raw/review", "data/raw/meta", "data/intermediate"]
+DATA_PATHS: list[str] = ["data/raw/review", "data/raw/meta", "data/intermediate", "data/processed"]
 
 ALL_CATEGORIES: list[str] = [
     "All_Beauty", "Amazon_Fashion", "Appliances", "Arts_Crafts_and_Sewing", "Automotive",
