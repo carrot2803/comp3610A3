@@ -3,7 +3,7 @@ REVIEW = "review"
 RAW = "data/raw"
 INTERMEDIATE = "D:/data/intermediate"
 PROCESSED = "data/processed"
-DATA_PATHS: list[str] = ["data/raw/review", "data/raw/meta", "data/intermediate", "data/processed"]
+DATA_PATHS: list[str] = ["data/raw/review", "data/raw/meta", "data/intermediate", "data/processed/imgs", "data/processed/docs", "data/processed/html"]
 
 ALL_CATEGORIES: list[str] = [
     "All_Beauty", "Amazon_Fashion", "Appliances", "Arts_Crafts_and_Sewing", "Automotive",

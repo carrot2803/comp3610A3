@@ -31,12 +31,11 @@ def plot_line(lf: pl.LazyFrame, plot_name: str) -> Figure:
     fig.update_xaxes(range=[x_min, x_max], dtick=1)
     fig.update_yaxes(tickformat=".3f")
 
-    path = "data/processed/plots/"
-    path += plot_name
+    path = "data/processed/"
 
-    fig.write_html(f"{path}.html")
-    fig.write_image(f"{path}.png", width=1500)
-    fig.write_image(f"{path}.pdf", width=1500)
+    fig.write_html(f"{path}/html/{plot_name}.html")
+    fig.write_image(f"{path}/imgs/{plot_name}.png", width=1500)
+    fig.write_image(f"{path}/docs/{plot_name}.pdf", width=1500)
     return fig
 
 
@@ -68,11 +67,9 @@ def price_rating(lf: pl.LazyFrame, plot_name: str) -> Figure:
     fig.update_xaxes(range=[0.5, 5.5], dtick=1)
     fig.update_yaxes(tickformat="$.2f")
 
-    path = "data/processed/plots/"
-    path += plot_name
+    path = "data/processed/"
 
-    fig.write_html(f"{path}.html")
-    fig.write_image(f"{path}.png", width=1500)
-    fig.write_image(f"{path}.pdf", width=1500)
+    fig.write_html(f"{path}/html/{plot_name}.html")
+    fig.write_image(f"{path}/imgs/{plot_name}.png", width=1500)
+    fig.write_image(f"{path}/docs/{plot_name}.pdf", width=1500)
     return fig
-

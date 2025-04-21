@@ -30,12 +30,11 @@ def plot_categories_bar(lf: pl.LazyFrame, plot_name: str) -> Figure:
         yaxis_title="Total Review Count",
     )
 
-    path = "data/processed/plots/"
-    path += plot_name
+    path = "data/processed/"
 
-    fig.write_html(f"{path}.html")
-    fig.write_image(f"{path}.png", width=1500)
-    fig.write_image(f"{path}.pdf", width=1500)
+    fig.write_html(f"{path}/html/{plot_name}.html")
+    fig.write_image(f"{path}/imgs/{plot_name}.png", width=1500)
+    fig.write_image(f"{path}/docs/{plot_name}.pdf", width=1500)
     return fig
 
 
@@ -65,10 +64,9 @@ def plot_brands_bar(lf: pl.LazyFrame, plot_name: str) -> Figure:
         yaxis_title="Total Review Count",
     )
 
-    path = "data/processed/plots/"
-    path += plot_name
+    path = "data/processed/"
 
-    fig.write_html(f"{path}.html")
-    fig.write_image(f"{path}.png", width=1500)
-    fig.write_image(f"{path}.pdf", width=1500)
+    fig.write_html(f"{path}/html/{plot_name}.html")
+    fig.write_image(f"{path}/imgs/{plot_name}.png", width=1500)
+    fig.write_image(f"{path}/docs/{plot_name}.pdf", width=1500)
     return fig
