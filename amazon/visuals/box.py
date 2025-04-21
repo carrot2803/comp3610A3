@@ -30,7 +30,7 @@ def get_sentiment(lf: pl.LazyFrame, cache: bool = False) -> pl.DataFrame:
 def plot_sentiment(lf: pl.LazyFrame, plot_name: str, cache: bool = False) -> Figure:
     bin: np.ndarray = np.arange(1, 6)
     sentiment_df: pl.DataFrame = get_sentiment(lf, cache)
-    
+
     fig: Figure = px.box(
         sentiment_df,
         x="rating",
@@ -49,10 +49,9 @@ def plot_sentiment(lf: pl.LazyFrame, plot_name: str, cache: bool = False) -> Fig
         xaxis_title="Star Rating (1-5)",
         yaxis_title="Sentiment",
     )
-    path = "data/processed/plots/"
-    path += plot_name
+    path = "data/processed/"
 
-    fig.write_html(f"{path}.html")
-    fig.write_image(f"{path}.png", width=1500)
-    fig.write_image(f"{path}.pdf", width=1500)
+    fig.write_html(f"{path}/html/{plot_name}.html")
+    fig.write_image(f"{path}/imgs/{plot_name}.png", width=1500)
+    fig.write_image(f"{path}/docs/{plot_name}.pdf", width=1500)
     return fig
