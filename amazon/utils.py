@@ -8,18 +8,24 @@ def create_directories(paths: list[str]) -> None:
         os.makedirs(path, exist_ok=True)
 
 
-def load_amazon_dataset(category: str, type: str) -> Dataset:
+def load_amazon_dataset(category: str, type: str, ram: bool = False) -> Dataset:
     return load_dataset(
         "McAuley-Lab/Amazon-Reviews-2023",
         f"raw_{type}_{category}",
         split="full",
         trust_remote_code=True,
+        keep_in_memory=ram,
     )
 
 
-def download_data(category: str, type: str) -> None:
-    """The hope when reusing the variable name is to prevent the variable existing in memory."""
-    data_set: Dataset = load_amazon_dataset(category, type)
-    data_set.to_parquet(f"data/raw/{type}/{category}.parquet")
+def download_data(category: str, type: str, ram: bool = False) -> None:
+    path: str = f"data/raw/{type}/{category}.parquet"
+    if os.path.exists(path):
+        print(f"File already exists: {path}. Skipping.")
+        return
+
+    print(f"Downloading {category} ({type})...")
+    data_set: Dataset = load_amazon_dataset(category, type, ram)
+    data_set.to_parquet(path)
     del data_set
     gc.collect()

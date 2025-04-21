@@ -1,0 +1,58 @@
+import polars as pl
+import plotly.express as px
+from plotly.graph_objs import Figure
+import numpy as np
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+
+
+def analysis(reviews: pl.Series) -> pl.Series:
+    analyzer = SentimentIntensityAnalyzer()
+
+    def scale_sentiment(review: str) -> float:
+        # normalize polarity score from [-1, 1] to [1, 5]
+        polarity: dict[str, float] = analyzer.polarity_scores(review)
+        compound_score: float = polarity["compound"]
+        return round(1 + (compound_score + 1) * 2)
+
+    return reviews.map_elements(scale_sentiment, pl.Float64)
+
+
+def get_sentiment(lf: pl.LazyFrame, cache: bool = False) -> pl.DataFrame:
+    path: str = "data/processed/sentiment/rating.parquet"
+    if cache == True:
+        return pl.read_parquet(path)
+    expr: pl.Expr = pl.col("text").map_batches(analysis).alias("sentiment_rating")
+    lf = lf.select(["rating", expr]).collect()
+    lf.write_parquet(path)
+    return lf
+
+
+def plot_sentiment(lf: pl.LazyFrame, plot_name: str, cache: bool = False) -> Figure:
+    bin: np.ndarray = np.arange(1, 6)
+    sentiment_df: pl.DataFrame = get_sentiment(lf, cache)
+    
+    fig: Figure = px.box(
+        sentiment_df,
+        x="rating",
+        y="sentiment_rating",
+        height=800,
+        color="rating",
+        color_discrete_sequence=px.colors.qualitative.Prism,
+        category_orders={"rating": bin},
+        template="ggplot2",
+    )
+
+    del sentiment_df
+
+    fig.update_layout(
+        title="Discrepancy Between User Rating and Review Sentiment",
+        xaxis_title="Star Rating (1-5)",
+        yaxis_title="Sentiment",
+    )
+    path = "data/processed/plots/"
+    path += plot_name
+
+    fig.write_html(f"{path}.html")
+    fig.write_image(f"{path}.png", width=1500)
+    fig.write_image(f"{path}.pdf", width=1500)
+    return fig
