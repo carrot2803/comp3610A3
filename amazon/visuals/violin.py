@@ -26,9 +26,4 @@ def plot_helpful_votes(lf: pl.LazyFrame, plot_name: str) -> Figure:
         yaxis_title="Helpful Votes",
     )
 
-    path: str = "data/processed/"
-
-    fig.write_html(f"{path}/html/{plot_name}.html")
-    fig.write_image(f"{path}/imgs/{plot_name}.png", width=1500)
-    fig.write_image(f"{path}/docs/{plot_name}.pdf", width=1500)
     return fig
