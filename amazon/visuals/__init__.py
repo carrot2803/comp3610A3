@@ -3,3 +3,4 @@ from .bar import *
 from .line import *
 from .matrix import *
 from .box import *
+from .violin import *
