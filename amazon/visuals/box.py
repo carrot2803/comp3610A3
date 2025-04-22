@@ -55,3 +55,34 @@ def plot_sentiment(lf: pl.LazyFrame, plot_name: str, cache: bool = False) -> Fig
     fig.write_image(f"{path}/imgs/{plot_name}.png", width=1500)
     fig.write_image(f"{path}/docs/{plot_name}.pdf", width=1500)
     return fig
+
+
+def plot_verified_purchase(lf: pl.LazyFrame, plot_name: str) -> Figure:
+    columns: list[str] = ["verified_purchase", "rating"]
+    verified_purchase: pl.DataFrame = lf.select(columns).collect()
+
+    fig: Figure = px.box(
+        verified_purchase,
+        x="verified_purchase",
+        y="rating",
+        height=800,
+        category_orders={"rating": [1, 2, 3, 4, 5]},
+        color="verified_purchase",
+        color_discrete_sequence=px.colors.qualitative.Prism,
+        template="ggplot2",
+    )
+
+    del verified_purchase
+
+    fig.update_layout(
+        title="Distribution of Star Ratings Across Verified Purchase",
+        xaxis_title="Verified Purchase",
+        yaxis_title="Star Rating",
+    )
+
+    path: str = "data/processed/"
+
+    fig.write_html(f"{path}/html/{plot_name}.html")
+    fig.write_image(f"{path}/imgs/{plot_name}.png", width=1500)
+    fig.write_image(f"{path}/docs/{plot_name}.pdf", width=1500)
+    return fig
