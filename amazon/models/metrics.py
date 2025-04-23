@@ -15,7 +15,6 @@ def get_metrics(y_true: np.ndarray, y_pred: np.ndarray, model_name: str) -> dict
         "Precision": precision_score(y_true, y_pred, zero_division=1),
         "Recall": recall_score(y_true, y_pred),
         "F1 Score": f1_score(y_true, y_pred),
-        "ROC AUC": roc_auc_score(y_true, y_pred),
         "True Negative": tn,
         "False Positive": fp,
         "False Negative": fn,
