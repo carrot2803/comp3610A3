@@ -15,7 +15,10 @@ def plot_histogram(lf: pl.LazyFrame, plot_name: str) -> Figure:
         y="n_reviews",
         color="verified_purchase",
         barmode="stack",
-        category_orders={"rating": [1, 2, 3, 4, 5]},
+        category_orders={
+            "rating": [1, 2, 3, 4, 5],
+            "verified_purchase": [True, False]
+        },
         color_discrete_sequence=px.colors.qualitative.Set2,
         height=800,
         template="ggplot2",

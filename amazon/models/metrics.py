@@ -49,7 +49,7 @@ def plot_confusion_matrix(result: pl.DataFrame) -> Figure:
     fig.update_layout(xaxis_title="Predicted Label", yaxis_title="True Label")
     path = "data/processed/"
 
-    fig.write_html(f"{path}/html/linear_regression.html")
+    fig.write_html(f"{path}/html/linear_regression.html", include_plotlyjs='cdn')
     fig.write_image(f"{path}/imgs/linear_regression.png", width=1500)
     fig.write_image(f"{path}/docs/linear_regression.pdf", width=1500)
     return fig

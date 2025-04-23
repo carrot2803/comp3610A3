@@ -29,7 +29,7 @@ def plot_correlation_matrix(lf: pl.LazyFrame, plot_name: str) -> Figure:
 
     path = "data/processed/"
     print("Saving Figure")
-    fig.write_html(f"{path}/html/{plot_name}.html")
+    fig.write_html(f"{path}/html/{plot_name}.html", include_plotlyjs='cdn')
     fig.write_image(f"{path}/imgs/{plot_name}.png", width=1500)
     fig.write_image(f"{path}/docs/{plot_name}.pdf", width=1500)
 

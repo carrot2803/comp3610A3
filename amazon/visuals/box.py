@@ -52,7 +52,7 @@ def plot_sentiment(lf: pl.LazyFrame, plot_name: str, cache: bool = False) -> Fig
     )
     path = "data/processed/"
 
-    fig.write_html(f"{path}/html/{plot_name}.html")
+    fig.write_html(f"{path}/html/{plot_name}.html", include_plotlyjs='cdn')
     fig.write_image(f"{path}/imgs/{plot_name}.png", width=1500)
     fig.write_image(f"{path}/docs/{plot_name}.pdf", width=1500)
     
@@ -85,7 +85,7 @@ def plot_verified_purchase(lf: pl.LazyFrame, plot_name: str) -> Figure:
 
     path: str = "data/processed/"
     print("Saving Figure")
-    fig.write_html(f"{path}/html/{plot_name}.html")
+    fig.write_html(f"{path}/html/{plot_name}.html", include_plotlyjs='cdn')
     fig.write_image(f"{path}/imgs/{plot_name}.png", width=1500)
     fig.write_image(f"{path}/docs/{plot_name}.pdf", width=1500)
 
