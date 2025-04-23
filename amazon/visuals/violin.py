@@ -1,3 +1,4 @@
+import gc
 import polars as pl
 import plotly.express as px
 from plotly.graph_objs import Figure
@@ -6,7 +7,7 @@ from plotly.graph_objs import Figure
 def plot_helpful_votes(lf: pl.LazyFrame, plot_name: str) -> Figure:
     columns: list[str] = ["helpful_vote", "rating"]
     helpful_votes: pl.DataFrame = lf.select(columns).collect()
-
+    print("Plotting Figure")
     fig: Figure = px.violin(
         helpful_votes,
         x="rating",
@@ -25,5 +26,5 @@ def plot_helpful_votes(lf: pl.LazyFrame, plot_name: str) -> Figure:
         xaxis_title="Star Rating",
         yaxis_title="Helpful Votes",
     )
-
+    gc.collect()
     return fig

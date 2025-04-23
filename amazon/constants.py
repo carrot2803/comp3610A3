@@ -1,11 +1,11 @@
 META = "meta"
 REVIEW = "review"
-RAW = "D:/data/raw"
+RAW = "/home/glor/300/comp3610A3/data/raw"
 INTERMEDIATE = "data/intermediate"
 PROCESSED = "data/processed"
 DATA_PATHS: list[str] = [
-    "D:/data/raw/review",
-    "D:/data/raw/meta",
+    "data/raw/review",
+    "data/raw/meta",
     "data/intermediate",
     "data/processed/imgs",
     "data/processed/docs",

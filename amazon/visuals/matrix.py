@@ -1,3 +1,4 @@
+import gc
 from plotly.graph_objs._figure import Figure
 import polars as pl
 import plotly.express as px
@@ -7,7 +8,7 @@ import numpy as np
 def plot_correlation_matrix(lf: pl.LazyFrame, plot_name: str) -> Figure:
     lf: pl.LazyFrame = lf.select(["review_length", "rating"])
     corr_matrix: np.ndarray = lf.collect().corr().to_numpy()
-
+    print("Plotting Figure")
     fig: Figure = px.imshow(
         corr_matrix,
         text_auto=True,
@@ -27,8 +28,10 @@ def plot_correlation_matrix(lf: pl.LazyFrame, plot_name: str) -> Figure:
     )
 
     path = "data/processed/"
-
+    print("Saving Figure")
     fig.write_html(f"{path}/html/{plot_name}.html")
     fig.write_image(f"{path}/imgs/{plot_name}.png", width=1500)
     fig.write_image(f"{path}/docs/{plot_name}.pdf", width=1500)
+
+    gc.collect()
     return fig

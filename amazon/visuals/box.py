@@ -1,3 +1,4 @@
+import gc
 import polars as pl
 import plotly.express as px
 from plotly.graph_objs import Figure
@@ -30,7 +31,7 @@ def get_sentiment(lf: pl.LazyFrame, cache: bool = False) -> pl.DataFrame:
 def plot_sentiment(lf: pl.LazyFrame, plot_name: str, cache: bool = False) -> Figure:
     bin: np.ndarray = np.arange(1, 6)
     sentiment_df: pl.DataFrame = get_sentiment(lf, cache)
-
+    print("Plotting Figure")
     fig: Figure = px.box(
         sentiment_df,
         x="rating",
@@ -43,7 +44,7 @@ def plot_sentiment(lf: pl.LazyFrame, plot_name: str, cache: bool = False) -> Fig
     )
 
     del sentiment_df
-
+    print("Saving Figure")
     fig.update_layout(
         title="Discrepancy Between User Rating and Review Sentiment",
         xaxis_title="Star Rating (1-5)",
@@ -54,13 +55,15 @@ def plot_sentiment(lf: pl.LazyFrame, plot_name: str, cache: bool = False) -> Fig
     fig.write_html(f"{path}/html/{plot_name}.html")
     fig.write_image(f"{path}/imgs/{plot_name}.png", width=1500)
     fig.write_image(f"{path}/docs/{plot_name}.pdf", width=1500)
+    
+    gc.collect()
     return fig
 
 
 def plot_verified_purchase(lf: pl.LazyFrame, plot_name: str) -> Figure:
     columns: list[str] = ["verified_purchase", "rating"]
     verified_purchase: pl.DataFrame = lf.select(columns).collect()
-
+    print("Plotting Figure")
     fig: Figure = px.box(
         verified_purchase,
         x="verified_purchase",
@@ -81,8 +84,10 @@ def plot_verified_purchase(lf: pl.LazyFrame, plot_name: str) -> Figure:
     )
 
     path: str = "data/processed/"
-
+    print("Saving Figure")
     fig.write_html(f"{path}/html/{plot_name}.html")
     fig.write_image(f"{path}/imgs/{plot_name}.png", width=1500)
     fig.write_image(f"{path}/docs/{plot_name}.pdf", width=1500)
+
+    gc.collect()
     return fig
