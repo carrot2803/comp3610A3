@@ -24,7 +24,7 @@ def get_metrics(y_true: np.ndarray, y_pred: np.ndarray, model_name: str) -> dict
 
 def plot_confusion_matrix(result: pl.DataFrame) -> Figure:
     row: tuple[int] = result.row(0)
-    tn, fp, fn, tp = row[6], row[7], row[8], row[9]
+    tn, fp, fn, tp = row[5], row[6], row[7], row[8]
 
     # build new matrix with Positive first on both axes:
     #   rows = [True:Positive, True:Negative]
