@@ -6,13 +6,13 @@ import plotly.express as px
 
 def plot_histogram(lf: pl.LazyFrame, plot_name: str) -> Figure:
     lf = lf.group_by(["rating","verified_purchase"]).len()
-    lf = lf.rename({"len": "n_reviews"}).collect()
+    lf = lf.rename({"len": "number of reviews"}).collect()
     print("Plotting figure")
 
     fig = px.bar(
         lf,
         x="rating",
-        y="n_reviews",
+        y="number of reviews",
         color="verified_purchase",
         barmode="stack",
         category_orders={

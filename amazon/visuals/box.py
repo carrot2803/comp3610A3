@@ -19,7 +19,7 @@ def analysis(reviews: pl.Series) -> pl.Series:
 
 
 def get_sentiment(lf: pl.LazyFrame, cache: bool = False) -> pl.DataFrame:
-    path: str = "data/processed/sentiment/rating.parquet"
+    path: str = "data/processed/rating_cache.parquet"
     if cache == True:
         return pl.read_parquet(path)
     expr: pl.Expr = pl.col("text").map_batches(analysis).alias("sentiment_rating")
@@ -43,13 +43,13 @@ def plot_sentiment(lf: pl.LazyFrame, plot_name: str, cache: bool = False) -> Fig
         template="ggplot2",
     )
 
-    del sentiment_df
     print("Saving Figure")
     fig.update_layout(
-        title="Discrepancy Between User Rating and Review Sentiment",
+        title=f"Discrepancy Between User Rating and Review Sentiment (Purchase Sample={len(sentiment_df)})",
         xaxis_title="Star Rating (1-5)",
         yaxis_title="Sentiment",
     )
+    del sentiment_df
     path = "data/processed/"
 
     fig.write_html(f"{path}/html/{plot_name}.html", include_plotlyjs='cdn')
@@ -75,13 +75,13 @@ def plot_verified_purchase(lf: pl.LazyFrame, plot_name: str) -> Figure:
         template="ggplot2",
     )
 
-    del verified_purchase
 
     fig.update_layout(
-        title="Distribution of Star Ratings Across Verified Purchase",
+        title=f"Distribution of Star Ratings Across Verified (Purchase Sample={len(verified_purchase)})",
         xaxis_title="Verified Purchase",
         yaxis_title="Star Rating",
     )
+    del verified_purchase
 
     path: str = "data/processed/"
     print("Saving Figure")
