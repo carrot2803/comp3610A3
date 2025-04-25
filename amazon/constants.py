@@ -3,6 +3,7 @@ REVIEW = "review"
 RAW = "/home/glor/300/comp3610A3/data/raw"
 INTERMEDIATE = "data/intermediate"
 PROCESSED = "data/processed"
+
 DATA_PATHS: list[str] = [
     "data/raw/review",
     "data/raw/meta",
