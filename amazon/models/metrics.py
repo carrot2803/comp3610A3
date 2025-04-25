@@ -21,6 +21,7 @@ def get_metrics(y_true: np.ndarray, y_pred: np.ndarray, model_name: str) -> dict
         "True Positive": tp,
     }
 
+
 def plot_confusion_matrix(result: pl.DataFrame) -> Figure:
     row = result.row(0)
     tn: int = result.select("True Negative").item()
@@ -44,14 +45,11 @@ def plot_confusion_matrix(result: pl.DataFrame) -> Figure:
         width=700,
     )
 
-    fig.update_layout(
-        xaxis_title="Predicted Label",
-        yaxis_title="True Label"
-    )
+    fig.update_layout(xaxis_title="Predicted Label", yaxis_title="True Label")
 
     path = "data/processed"
-    fig.write_html(f"{path}/html/linear_regression.html", include_plotlyjs='cdn')
-    fig.write_image(f"{path}/imgs/linear_regression.png", width=1500)
-    fig.write_image(f"{path}/docs/linear_regression.pdf", width=1500)
+    fig.write_html(f"{path}/html/logistic_regression.html", include_plotlyjs="cdn")
+    fig.write_image(f"{path}/imgs/logistic_regression.png", width=1500)
+    fig.write_image(f"{path}/docs/logistic_regression.pdf", width=1500)
 
     return fig
