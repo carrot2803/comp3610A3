@@ -1,7 +1,0 @@
-data/raw
-data/intermediate
-data/processed/*.parquet
-__pycache__
-venv
-*.npz
-*.pkl
