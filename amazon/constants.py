@@ -1,9 +1,17 @@
 META = "meta"
 REVIEW = "review"
 RAW = "data/raw"
-INTERMEDIATE = "D:/data/intermediate"
+INTERMEDIATE = "data/intermediate"
 PROCESSED = "data/processed"
-DATA_PATHS: list[str] = ["data/raw/review", "data/raw/meta", "data/intermediate", "data/processed/imgs", "data/processed/docs", "data/processed/html"]
+
+DATA_PATHS: list[str] = [
+    "data/raw/review",
+    "data/raw/meta",
+    "data/intermediate",
+    "data/processed/imgs",
+    "data/processed/docs",
+    "data/processed/html",
+]
 
 ALL_CATEGORIES: list[str] = [
     "All_Beauty", "Amazon_Fashion", "Appliances", "Arts_Crafts_and_Sewing", "Automotive",
@@ -17,4 +25,3 @@ ALL_CATEGORIES: list[str] = [
 ]
 
 TEST_CATEGORIES: list[str] = ["Gift_Cards", "Subscription_Boxes", "Magazine_Subscriptions"]
-

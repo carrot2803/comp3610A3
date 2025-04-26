@@ -15,7 +15,6 @@ def get_metrics(y_true: np.ndarray, y_pred: np.ndarray, model_name: str) -> dict
         "Precision": precision_score(y_true, y_pred, zero_division=1),
         "Recall": recall_score(y_true, y_pred),
         "F1 Score": f1_score(y_true, y_pred),
-        "ROC AUC": roc_auc_score(y_true, y_pred),
         "True Negative": tn,
         "False Positive": fp,
         "False Negative": fn,
@@ -24,14 +23,13 @@ def get_metrics(y_true: np.ndarray, y_pred: np.ndarray, model_name: str) -> dict
 
 
 def plot_confusion_matrix(result: pl.DataFrame) -> Figure:
-    row: tuple[int] = result.row(0)
-    tn, fp, fn, tp = row[6], row[7], row[8], row[9]
+    tn: int = result.select("True Negative").item()
+    fp: int = result.select("False Positive").item()
+    fn: int = result.select("False Negative").item()
+    tp: int = result.select("True Positive").item()
+    model_name: str = result.select("Model").item()
 
-    # build new matrix with Positive first on both axes:
-    #   rows = [True:Positive, True:Negative]
-    #   cols = [Pred:Positive, Pred:Negative]
     conf_matrix: list[list[int]] = [[tp, fn], [fp, tn]]
-
     labels: list[str] = ["Positive", "Negative"]
 
     fig: Figure = px.imshow(
@@ -40,16 +38,17 @@ def plot_confusion_matrix(result: pl.DataFrame) -> Figure:
         y=[f"True: {l}" for l in labels],
         color_continuous_scale="Blues",
         text_auto=True,
-        labels=dict(color="Count"),
-        title=f"Confusion Matrix: {row[0]}",
+        labels={"color": "Count"},
+        title=f"Confusion Matrix: {model_name}",
         height=700,
         width=700,
     )
 
     fig.update_layout(xaxis_title="Predicted Label", yaxis_title="True Label")
-    path = "data/processed/"
 
-    fig.write_html(f"{path}/html/linear_regression.html")
-    fig.write_image(f"{path}/imgs/linear_regression.png", width=1500)
-    fig.write_image(f"{path}/docs/linear_regression.pdf", width=1500)
+    path = "data/processed"
+    fig.write_html(f"{path}/html/logistic_regression.html", include_plotlyjs="cdn")
+    fig.write_image(f"{path}/imgs/logistic_regression.png", width=1500)
+    fig.write_image(f"{path}/docs/logistic_regression.pdf", width=1500)
+
     return fig

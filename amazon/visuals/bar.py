@@ -1,7 +1,7 @@
 from plotly.graph_objs._figure import Figure
 import polars as pl
 import plotly.express as px
-
+import gc
 
 def plot_categories_bar(lf: pl.LazyFrame, plot_name: str) -> Figure:
     lf: pl.LazyFrame = lf.with_columns(
@@ -10,11 +10,11 @@ def plot_categories_bar(lf: pl.LazyFrame, plot_name: str) -> Figure:
     lf = lf.group_by("category").agg(pl.len()).sort("len", descending=True).head(10)
     top_categories: pl.DataFrame = lf.collect()
 
+    print("Plotting Figure")
     fig: Figure = px.bar(
         top_categories,
         x="len",
         y="category",
-        height=800,
         color="category",
         color_discrete_sequence=px.colors.qualitative.Prism,
         orientation="h",
@@ -31,10 +31,15 @@ def plot_categories_bar(lf: pl.LazyFrame, plot_name: str) -> Figure:
     )
 
     path = "data/processed/"
+    print("Saving Figure")
 
-    fig.write_html(f"{path}/html/{plot_name}.html")
+    fig.update_layout(height=625)
+    fig.write_html(f"{path}/html/{plot_name}.html", include_plotlyjs='cdn')
+    fig.update_layout(height=800)
     fig.write_image(f"{path}/imgs/{plot_name}.png", width=1500)
     fig.write_image(f"{path}/docs/{plot_name}.pdf", width=1500)
+
+    gc.collect()
     return fig
 
 
@@ -44,12 +49,11 @@ def plot_brands_bar(lf: pl.LazyFrame, plot_name: str) -> Figure:
     lf = lf.sort("len", descending=True).head(10)
 
     top_brands: pl.DataFrame = lf.collect()
-
+    print("Plotting Figure")
     fig: Figure = px.bar(
         top_brands,
         y="len",
         x="brand",
-        height=800,
         color="brand",
         color_discrete_sequence=px.colors.qualitative.Prism,
         template="ggplot2",
@@ -65,8 +69,11 @@ def plot_brands_bar(lf: pl.LazyFrame, plot_name: str) -> Figure:
     )
 
     path = "data/processed/"
-
-    fig.write_html(f"{path}/html/{plot_name}.html")
+    print("Saving Figure")
+    fig.update_layout(height=625)
+    fig.write_html(f"{path}/html/{plot_name}.html", include_plotlyjs='cdn')
+    fig.update_layout(height=800)
     fig.write_image(f"{path}/imgs/{plot_name}.png", width=1500)
     fig.write_image(f"{path}/docs/{plot_name}.pdf", width=1500)
+    gc.collect()
     return fig
