@@ -8,14 +8,12 @@ This project focuses on processing, analyzing, and modeling data from the [Amazo
 - **Swap Space:** Additional 100GB dedicated  
 - **Storage:** 300GB 3D NAND SATA SSD  
  
-Explore the data through interactive visualizations [here](https://carrot2803.github.io/comp3610A3/).
-
-View the processed data visualizations and PDF reports [here](https://github.com/carrot2803/comp3610A3/tree/master/data/processed).
-
-Browse additional relevant images on [Imgur](https://imgur.com/a/comp-3610-assignment-3-2iUDUBa).
-
-
-The relevant notebooks for your use is in the root directory.
+**Resources**
+- Explore the data through interactive visualizations [here](https://carrot2803.github.io/comp3610A3/).
+- View the processed data visualizations and PDF reports [here](https://github.com/carrot2803/comp3610A3/tree/master/data/processed).
+- Browse additional relevant images on [Imgur](https://imgur.com/a/comp-3610-assignment-3-2iUDUBa).
+- The relevant notebooks for your use, are in the root directory.
+- PDF report detailing the steps [PDF](https://github.com/carrot2803/comp3610A3/blob/master/report.pdf)
 
 ## Installation Guide
 <details>
